@@ -1,0 +1,1184 @@
+```html
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Before We Become Strangers Again</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=DM+Sans:wght@300;400&display=swap');
+
+:root{
+    --bg:#0b0b0b;
+    --fg:#eee9e1;
+    --muted:#99938c;
+    --line:#272523;
+    --serif:"Cormorant Garamond",Georgia,serif;
+    --sans:"DM Sans",Arial,sans-serif
+}
+
+*{box-sizing:border-box}
+
+html{
+    scroll-behavior:smooth
+}
+
+body{
+    margin:0;
+    background:var(--bg);
+    color:var(--fg);
+    font:300 16px/1.85 var(--sans)
+}
+
+::selection{
+    background:#54483f;
+    color:white
+}
+
+.progress{
+    position:fixed;
+    top:0;
+    left:0;
+    height:2px;
+    background:#d5c0ae;
+    width:0;
+    z-index:20
+}
+
+/* MUSIC */
+
+.music-indicator{
+    position:fixed;
+    right:20px;
+    top:20px;
+    z-index:30;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:8px 13px;
+    border:1px solid #272523;
+    border-radius:30px;
+    background:#0b0b0bcc;
+    backdrop-filter:blur(8px);
+    color:#777;
+    font-size:.55rem;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    opacity:0;
+    transition:.6s;
+}
+
+.music-indicator.active{
+    opacity:1;
+}
+
+.music-dot{
+    width:6px;
+    height:6px;
+    border-radius:50%;
+    background:#b59d88;
+    animation:pulse 1.5s infinite;
+}
+
+@keyframes pulse{
+    0%,100%{opacity:.35}
+    50%{opacity:1}
+}
+
+/* COVER */
+
+.cover{
+    min-height:100svh;
+    display:grid;
+    place-items:center;
+    text-align:center;
+    padding:30px;
+    position:relative;
+    overflow:hidden
+}
+
+.cover:before{
+    content:"";
+    position:absolute;
+    width:80vw;
+    height:80vw;
+    border-radius:50%;
+    background:radial-gradient(circle,#c9b29d12,transparent 68%);
+    filter:blur(15px);
+    animation:float 10s ease-in-out infinite
+}
+
+.cover>div{
+    position:relative;
+    z-index:1
+}
+
+.small,.chapter{
+    font-size:.62rem;
+    letter-spacing:.28em;
+    text-transform:uppercase;
+    color:var(--muted)
+}
+
+h1{
+    font:400 clamp(3.1rem,10vw,8rem)/.86 var(--serif);
+    margin:32px 0
+}
+
+h1 em,h2 em{
+    font-style:italic
+}
+
+.cover p{
+    max-width:500px;
+    margin:auto;
+    color:var(--muted);
+    font-size:.9rem
+}
+
+.open{
+    margin-top:45px;
+    border:1px solid var(--line);
+    background:transparent;
+    color:var(--fg);
+    padding:14px 24px;
+    border-radius:30px;
+    text-transform:uppercase;
+    letter-spacing:.13em;
+    font-size:.65rem;
+    cursor:pointer;
+    transition:.3s
+}
+
+.open:hover{
+    background:var(--fg);
+    color:#111
+}
+
+.scroll{
+    position:absolute;
+    bottom:25px;
+    left:50%;
+    transform:translateX(-50%);
+    font-size:.55rem;
+    letter-spacing:.2em;
+    color:#555;
+    text-transform:uppercase
+}
+
+/* MAIN */
+
+main{
+    max-width:820px;
+    margin:auto;
+    padding:0 25px
+}
+
+section{
+    padding:125px 0
+}
+
+.chapter{
+    margin-bottom:28px
+}
+
+h2{
+    font:400 clamp(2.3rem,7vw,4.5rem)/1 var(--serif);
+    margin:0 0 40px
+}
+
+p{
+    color:#d8d3cc;
+    margin:0 0 24px
+}
+
+.lead{
+    font:italic 400 clamp(1.35rem,4vw,1.8rem)/1.5 var(--serif);
+    color:var(--fg)
+}
+
+.quote{
+    border-left:1px solid #b59d88;
+    padding-left:24px;
+    margin:48px 0;
+    font:italic 400 1.5rem/1.5 var(--serif);
+    color:#d7c1ae
+}
+
+.divider{
+    width:42px;
+    height:1px;
+    background:var(--line);
+    margin:auto
+}
+
+.reveal{
+    opacity:0;
+    transform:translateY(25px);
+    transition:1s
+}
+
+.reveal.show{
+    opacity:1;
+    transform:none
+}
+
+/* MEMORIES */
+
+.memories{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:80px;
+    margin:70px 0
+}
+
+.memory{
+    background:#e6dfd5;
+    color:#222;
+    padding:12px 12px 35px;
+    box-shadow:0 15px 35px #0008;
+}
+
+.memory:nth-child(1){
+    transform:rotate(-.6deg)
+}
+
+.memory:nth-child(2){
+    transform:rotate(.7deg)
+}
+
+.memory:nth-child(3){
+    transform:rotate(-.4deg)
+}
+
+.memory:nth-child(4){
+    transform:rotate(.6deg)
+}
+
+.memory:nth-child(5){
+    transform:rotate(-.7deg)
+}
+
+.photo{
+    width:100%;
+    aspect-ratio:16/10;
+    background:#cfc7bd;
+    display:grid;
+    place-items:center;
+    color:#777;
+    font-size:.6rem;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    overflow:hidden
+}
+
+.photo img{
+    width:100%;
+    height:100%;
+    object-fit:cover
+}
+
+.memory-content{
+    padding:30px 22px 5px
+}
+
+.memory-number{
+    font-size:.55rem;
+    letter-spacing:.25em;
+    text-transform:uppercase;
+    color:#888;
+    margin-bottom:12px
+}
+
+.memory h3{
+    font:400 2rem/1.1 var(--serif);
+    margin:0 0 22px;
+    color:#191715
+}
+
+.memory p{
+    color:#393531;
+    font-size:.95rem;
+    line-height:1.8;
+    margin-bottom:18px
+}
+
+.caption{
+    font:italic 400 1rem var(--serif);
+    text-align:center;
+    padding-top:22px;
+    color:#444
+}
+
+/* LETTER */
+
+.letter{
+    background:#eee9e1;
+    color:#1a1816;
+    padding:65px clamp(28px,7vw,75px);
+    margin:50px auto;
+    position:relative
+}
+
+.letter:before{
+    content:"";
+    position:absolute;
+    inset:13px;
+    border:1px solid #2222
+}
+
+.letter p{
+    color:#292623
+}
+
+.letter .lead{
+    color:#151311
+}
+
+.letter-head{
+    font-size:.58rem;
+    letter-spacing:.25em;
+    text-transform:uppercase;
+    color:#777;
+    margin-bottom:50px
+}
+
+.signature{
+    font:italic 400 1.5rem var(--serif);
+    margin-top:45px
+}
+
+/* BLACKOUT */
+
+.blackout,.final{
+    min-height:100svh;
+    background:#050505;
+    display:grid;
+    place-items:center;
+    text-align:center;
+    padding:40px 25px
+}
+
+.blackout .inner,.final .inner{
+    max-width:720px
+}
+
+.fade-line,.final p{
+    font:400 clamp(2rem,7vw,4.4rem)/1.2 var(--serif);
+    opacity:0;
+    transform:translateY(15px);
+    transition:1.4s
+}
+
+.fade-line.show,.final p.show{
+    opacity:1;
+    transform:none
+}
+
+.final .goodbye{
+    font-size:clamp(3rem,9vw,7rem);
+    margin-top:70px;
+    font-style:italic
+}
+
+.final small{
+    opacity:0;
+    color:#555;
+    letter-spacing:.2em;
+    text-transform:uppercase;
+    font-size:.58rem;
+    transition:2s
+}
+
+.final small.show{
+    opacity:1
+}
+
+footer{
+    text-align:center;
+    background:#050505;
+    color:#444;
+    padding:28px;
+    font-size:.55rem;
+    letter-spacing:.18em;
+    text-transform:uppercase
+}
+
+@keyframes float{
+    0%,100%{transform:translate(-2%,-2%)}
+    50%{transform:translate(2%,2%)}
+}
+
+@media(max-width:600px){
+
+    section{
+        padding:95px 0
+    }
+
+    .memories{
+        gap:60px
+    }
+
+    .memory-content{
+        padding:25px 16px 5px
+    }
+
+    .letter{
+        padding:55px 27px
+    }
+
+    .music-indicator{
+        top:12px;
+        right:12px;
+    }
+}
+
+@media(prefers-reduced-motion:reduce){
+
+    *{
+        animation:none!important;
+        transition:none!important
+    }
+
+    .reveal,
+    .fade-line,
+    .final p,
+    .final small{
+        opacity:1;
+        transform:none
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- MUSIC -->
+<audio id="backgroundMusic" loop preload="auto">
+    <source src="last-kiss.mp3" type="audio/mpeg">
+</audio>
+
+<div class="music-indicator" id="musicIndicator">
+    <span class="music-dot"></span>
+    <span>Last Kiss</span>
+</div>
+
+<div class="progress" id="progress"></div>
+
+<!-- COVER -->
+
+<header class="cover" id="top">
+    <div>
+
+        <div class="small">a letter for Zed</div>
+
+        <h1>
+            Before we become<br>
+            <em>strangers again.</em>
+        </h1>
+
+        <p>
+            I don't know if there is a perfect way to say goodbye
+            to someone you still love. So I'm going to say everything
+            I need you to know.
+        </p>
+
+        <button class="open" id="beginButton">
+            begin
+        </button>
+
+    </div>
+
+    <div class="scroll">
+        take your time
+    </div>
+</header>
+
+
+<main id="story">
+
+<!-- 01 -->
+
+<section class="reveal">
+
+    <div class="chapter">
+        01 — If it were up to me
+    </div>
+
+    <h2>
+        I would've stayed.
+    </h2>
+
+    <p class="lead">
+        Zed, I would've done everything I could to keep you
+        in my life and love you the way you deserved to be loved.
+    </p>
+
+    <p>
+        I want you to know that—not because I want you to change
+        your mind, but because I don't want you to ever think I
+        left because I didn't care enough.
+    </p>
+
+    <p>
+        I love you. I still do. And if this were only my decision,
+        I would still choose you.
+    </p>
+
+    <div class="quote">
+        “I would choose you. But I can't choose for you.”
+    </div>
+
+    <p>
+        If you love me and still don't want a life with me,
+        I have to respect that. I don't have the right to take
+        that choice away from you just because it breaks my heart.
+    </p>
+
+</section>
+
+<div class="divider"></div>
+
+
+<!-- 02 -->
+
+<section class="reveal">
+
+    <div class="chapter">
+        02 — The parts I regret
+    </div>
+
+    <h2>
+        I'm sorry.
+    </h2>
+
+    <p>
+        I'm sorry for all the inconveniences I gave you—for the
+        moments when I became difficult to understand, for the
+        times I spiraled, overthought, needed reassurance, or let
+        my fear get louder than everything else.
+    </p>
+
+    <p>
+        None of it came from a place of hate. I never wanted to
+        hurt you. Sometimes I just loved you so much that I didn't
+        know what to do with everything I was feeling, and that
+        love came out in ways that weren't fair to you.
+    </p>
+
+    <p>
+        That doesn't erase the effect it had. I'm not asking you
+        to excuse me. I just hope that someday you'll understand
+        where it came from.
+    </p>
+
+    <div class="quote">
+        I was never trying to make your life harder.
+        I was trying, sometimes badly, not to lose you.
+    </div>
+
+</section>
+
+<div class="divider"></div>
+
+
+<!-- 03 MEMORIES -->
+
+<section class="reveal">
+
+    <div class="chapter">
+        03 — The memories
+    </div>
+
+    <h2>
+        I'm keeping the good.
+    </h2>
+
+    <p class="lead">
+        I don't want the ending to rewrite everything
+        that came before it.
+    </p>
+
+    <p>
+        There are five memories I keep coming back to.
+        Maybe they're ordinary moments to you now, but they
+        became pieces of my life that I know I'll carry with me.
+    </p>
+
+
+    <div class="memories">
+
+        <!-- MEMORY 1 -->
+
+        <article class="memory">
+
+            <div class="photo">
+                <img src="memory1.jpg"
+                     alt="Memory 1"
+                     onerror="this.style.display='none'">
+                <span>memory 1</span>
+            </div>
+
+            <div class="memory-content">
+
+                <div class="memory-number">
+                    memory one
+                </div>
+
+                <h3>
+                    [Memory title]
+                </h3>
+
+                <p>
+                    [Write the first paragraph of your memory here.
+                    Talk about what happened, where you were, what
+                    you noticed, or what made that moment special.]
+                </p>
+
+                <p>
+                    [Write the second paragraph here. You can talk
+                    about how you felt during that moment, something
+                    Zed said or did, or why you still remember it.]
+                </p>
+
+                <div class="caption">
+                    [short caption for the photo]
+                </div>
+
+            </div>
+
+        </article>
+
+
+        <!-- MEMORY 2 -->
+
+        <article class="memory">
+
+            <div class="photo">
+                <img src="memory2.jpg"
+                     alt="Memory 2"
+                     onerror="this.style.display='none'">
+                <span>memory 2</span>
+            </div>
+
+            <div class="memory-content">
+
+                <div class="memory-number">
+                    memory two
+                </div>
+
+                <h3>
+                    [Memory title]
+                </h3>
+
+                <p>
+                    [Write the first paragraph of your second memory
+                    here. Describe the moment naturally, like you're
+                    telling Zed about something only the two of you
+                    would understand.]
+                </p>
+
+                <p>
+                    [Write the second paragraph here. Talk about what
+                    that memory means to you now and why you decided
+                    to include it in this letter.]
+                </p>
+
+                <div class="caption">
+                    [short caption for the photo]
+                </div>
+
+            </div>
+
+        </article>
+
+
+        <!-- MEMORY 3 -->
+
+        <article class="memory">
+
+            <div class="photo">
+                <img src="memory3.jpg"
+                     alt="Memory 3"
+                     onerror="this.style.display='none'">
+                <span>memory 3</span>
+            </div>
+
+            <div class="memory-content">
+
+                <div class="memory-number">
+                    memory three
+                </div>
+
+                <h3>
+                    [Memory title]
+                </h3>
+
+                <p>
+                    [Write the first paragraph of your third memory
+                    here. Include the little details you don't want
+                    to forget.]
+                </p>
+
+                <p>
+                    [Write the second paragraph here. This can be
+                    more emotional if you want—what you felt, what
+                    you wish you could go back to, or what you learned
+                    from that moment.]
+                </p>
+
+                <div class="caption">
+                    [short caption for the photo]
+                </div>
+
+            </div>
+
+        </article>
+
+
+        <!-- MEMORY 4 -->
+
+        <article class="memory">
+
+            <div class="photo">
+                <img src="memory4.jpg"
+                     alt="Memory 4"
+                     onerror="this.style.display='none'">
+                <span>memory 4</span>
+            </div>
+
+            <div class="memory-content">
+
+                <div class="memory-number">
+                    memory four
+                </div>
+
+                <h3>
+                    [Memory title]
+                </h3>
+
+                <p>
+                    [Write the first paragraph of your fourth memory
+                    here. Tell the story behind the picture and what
+                    was happening between you and Zed at the time.]
+                </p>
+
+                <p>
+                    [Write the second paragraph here. Explain why
+                    this is one of the moments you want to keep even
+                    though the relationship is ending.]
+                </p>
+
+                <div class="caption">
+                    [short caption for the photo]
+                </div>
+
+            </div>
+
+        </article>
+
+
+        <!-- MEMORY 5 -->
+
+        <article class="memory">
+
+            <div class="photo">
+                <img src="memory5.jpg"
+                     alt="Memory 5"
+                     onerror="this.style.display='none'">
+                <span>memory 5</span>
+            </div>
+
+            <div class="memory-content">
+
+                <div class="memory-number">
+                    memory five
+                </div>
+
+                <h3>
+                    [Memory title]
+                </h3>
+
+                <p>
+                    [Write the first paragraph of your fifth memory
+                    here. This can be the most meaningful memory or
+                    simply one of your favorite ordinary moments.]
+                </p>
+
+                <p>
+                    [Write the second paragraph here. End the memory
+                    with what you want Zed to remember about that
+                    particular moment.]
+                </p>
+
+                <div class="caption">
+                    [short caption for the photo]
+                </div>
+
+            </div>
+
+        </article>
+
+    </div>
+
+
+    <p>
+        I treasured every moment we had—the good, the bad, the quiet,
+        the messy, and everything in between.
+    </p>
+
+    <p>
+        I appreciate every effort you gave to our relationship,
+        even the things I didn't know how to appreciate properly
+        at the time.
+    </p>
+
+</section>
+
+
+<!-- LETTER -->
+
+<section class="reveal">
+
+    <div class="letter">
+
+        <div class="letter-head">
+            the things I needed to say
+        </div>
+
+        <p class="lead">
+            I don't want to rush into another love just because
+            yours is gone.
+        </p>
+
+        <p>
+            I'm not closing my doors to anyone. I still believe that
+            someday I'll find love again. I believe there is still
+            a life ahead of me that I haven't seen yet.
+        </p>
+
+        <p>
+            But right now, I want to let myself grieve the love that
+            we lost. I want to sit with it instead of immediately
+            trying to replace it. I want to focus on myself first—to
+            heal, to become okay with my own company, and to figure
+            out who I am when I'm not trying to hold on to someone.
+        </p>
+
+        <p>
+            I don't know how long that will take. And I don't need
+            to know.
+        </p>
+
+        <div class="quote">
+            I'm not moving on because I stopped loving you.
+            I'm moving forward because I have to learn how to
+            love myself, too.
+        </div>
+
+        <div class="signature">
+            And I hope you understand.
+        </div>
+
+    </div>
+
+</section>
+
+</main>
+
+
+<!-- BLOCKING -->
+
+<section class="blackout" id="block">
+
+    <div class="inner">
+
+        <p class="fade-line" data-delay="0">
+            I'm blocking you.
+        </p>
+
+        <p class="fade-line" data-delay="1700">
+            Not because I hate you.
+        </p>
+
+        <p class="fade-line" data-delay="3400">
+            I wish I did.
+        </p>
+
+        <p class="fade-line" data-delay="5100">
+            It would be so much easier.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- WHY -->
+
+<section class="reveal"
+style="max-width:820px;margin:auto;padding:120px 25px">
+
+    <div class="chapter">
+        04 — Why I need to
+    </div>
+
+    <h2>
+        I know myself.
+    </h2>
+
+    <p>
+        I know I'll spend hours looking for the perfect repost
+        or story that might have changed your mind.
+    </p>
+
+    <p>
+        I'll check your socials to see if you've already found
+        someone new. I'll wonder if you changed your mind.
+        I'll look for tiny signs that maybe you still think
+        about me.
+    </p>
+
+    <p>
+        And every time I do, I'll be putting myself back
+        at the beginning.
+    </p>
+
+    <div class="quote">
+        So this isn't punishment. It isn't anger.
+        It's me choosing peace.
+    </div>
+
+    <p>
+        I need to stop watching from a distance and hoping
+        for something that you may never want again.
+        I need to give myself the space to actually heal.
+    </p>
+
+    <p>
+        Please don't read the block as hatred.
+        I could never make myself hate you just to make
+        leaving easier.
+    </p>
+
+</section>
+
+
+<!-- FOR ZED -->
+
+<section class="reveal"
+style="max-width:820px;margin:auto;padding:30px 25px 130px">
+
+    <div class="chapter">
+        05 — For Zed
+    </div>
+
+    <h2>
+        I hope you find it.
+    </h2>
+
+    <p class="lead">
+        The kind of love that feels worth fighting for.
+    </p>
+
+    <p>
+        I hope someday you find someone you genuinely believe
+        is worth fighting for—and someone who believes you're
+        worth fighting for, too.
+    </p>
+
+    <p>
+        I hope they understand you. I hope they make you feel safe.
+        I hope they choose you without you having to wonder
+        whether they will.
+    </p>
+
+    <p>
+        I hope you get the life you want. I hope you accomplish
+        the things you dream about. I hope you win in life,
+        even in all the places I'll never get to see.
+    </p>
+
+</section>
+
+
+<!-- FINAL -->
+
+<section class="final" id="goodbye">
+
+    <div class="inner">
+
+        <p data-delay="0">
+            I hope you win in life.
+        </p>
+
+        <p data-delay="1800">
+            I hope life is kind to you.
+        </p>
+
+        <p data-delay="3600">
+            I hope you're loved well.
+        </p>
+
+        <p data-delay="5400">
+            And I hope you know that, for a while,
+            you were deeply loved by me.
+        </p>
+
+        <p class="goodbye" data-delay="7400">
+            Goodbye, <em>Zed.</em>
+        </p>
+
+        <small id="endnote">
+            thank you for everything.
+        </small>
+
+    </div>
+
+</section>
+
+
+<footer>
+    some endings are still worth remembering
+</footer>
+
+
+<script>
+
+/* =========================
+   BACKGROUND MUSIC
+========================= */
+
+const music = document.getElementById("backgroundMusic");
+const beginButton = document.getElementById("beginButton");
+const musicIndicator = document.getElementById("musicIndicator");
+
+beginButton.addEventListener("click", function(){
+
+    music.volume = 0.35;
+
+    music.play()
+        .then(() => {
+            musicIndicator.classList.add("active");
+        })
+        .catch(error => {
+            console.log("Music could not start:", error);
+        });
+
+    document.getElementById("story").scrollIntoView({
+        behavior:"smooth"
+    });
+
+});
+
+
+/* =========================
+   RESTART MUSIC IF NEEDED
+========================= */
+
+music.addEventListener("play", function(){
+    musicIndicator.classList.add("active");
+});
+
+
+/* =========================
+   SCROLL PROGRESS
+========================= */
+
+addEventListener("scroll",()=>{
+
+    let m=document.documentElement.scrollHeight-innerHeight;
+
+    if(m>0){
+        progress.style.width=(scrollY/m*100)+"%";
+    }
+
+});
+
+
+/* =========================
+   GENERAL REVEAL
+========================= */
+
+const ro=new IntersectionObserver(
+    es=>es.forEach(e=>
+        e.isIntersecting &&
+        e.target.classList.add("show")
+    ),
+    {threshold:.12}
+);
+
+document
+    .querySelectorAll(".reveal")
+    .forEach(e=>ro.observe(e));
+
+
+/* =========================
+   BLOCKING SECTION
+========================= */
+
+let b=false;
+
+new IntersectionObserver(es=>{
+
+    if(es[0].isIntersecting && !b){
+
+        b=true;
+
+        document
+            .querySelectorAll(".fade-line")
+            .forEach(e=>{
+
+                setTimeout(
+                    ()=>e.classList.add("show"),
+                    +e.dataset.delay
+                );
+
+            });
+
+    }
+
+},{threshold:.35})
+.observe(document.getElementById("block"));
+
+
+/* =========================
+   FINAL SECTION
+========================= */
+
+let f=false;
+
+new IntersectionObserver(es=>{
+
+    if(es[0].isIntersecting && !f){
+
+        f=true;
+
+        document
+            .querySelectorAll(".final p")
+            .forEach(e=>{
+
+                setTimeout(
+                    ()=>e.classList.add("show"),
+                    +e.dataset.delay
+                );
+
+            });
+
+        setTimeout(
+            ()=>document.getElementById("endnote")
+                .classList.add("show"),
+            9000
+        );
+
+    }
+
+},{threshold:.25})
+.observe(document.getElementById("goodbye"));
+
+</script>
+
+</body>
+</html>
+```
